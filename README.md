@@ -55,7 +55,10 @@ _65 minutes pass ..._
 `/game add-vs @Bob Frank 1:2`
 > Game `T1R1G3: Frank vs Bob Beta 2:1` recorded.
 
-> Round `T1R1` finished. Current standings:
+> Round `T1R1` finished.
+
+`/score`
+> `T1` current standings:
 * Alice Alpha: 4
 * Grace: 4
 * Carol: 2
@@ -73,3 +76,26 @@ _65 minutes pass ..._
 * `T1R2G3: Bob Beta vs Eve Epsilon`
 
 > Bye given to Dave. An odd number of players results in a bye for a random lowest-ranked player.
+
+`/game add-vs @Bob @Eve 2:2`
+> Game `T1R2G3` recorded.
+
+`/game add-vs @Alice Grace 4:0`
+> Game `T1R2G1` recorded.
+
+`/game add-vs Carol Frank 0:4`
+> Game `T1R2G2` recorded.
+
+> Round `T1R2` finished.
+
+> Tournament `T1` finished.
+
+`/score`
+> `T1` current standings:
+* Alice Alpha: 8
+* Frank: 6
+* Dave: 4
+* Eve Epsilon: 4
+* Grace: 4
+* Bob Beta: 3
+* Carol: 2

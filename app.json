@@ -1,0 +1,6 @@
+{
+  "name": "Tournaments for HipChat",
+  "description": "RESTful service tailored for HipChat usage",
+  "image": "heroku/java",
+  "addons": [ "heroku-postgresql" ]
+}

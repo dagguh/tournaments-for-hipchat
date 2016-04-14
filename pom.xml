@@ -15,10 +15,12 @@
 
     <properties>
         <jersey.version>2.22.2</jersey.version>
+        <jetty.version>9.3.8.v20160314</jetty.version>
         <kotlin.version>1.0.1-2</kotlin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -65,7 +67,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -90,9 +92,55 @@
                     <execution>
                         <goals>
                             <goal>compile</goal>
+                            <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <executions>
+                    <execution>
+                        <id>set-up</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>tear-down</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <stopKey>stop-key</stopKey>
+                    <stopPort>18080</stopPort>
+                    <!-- disable classpath scanning -->
+                    <webApp>
+                        <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>
+                        <containerIncludeJarPattern>^$</containerIncludeJarPattern>
+                    </webApp>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -100,7 +148,8 @@
                 <version>2.3</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>copy-jetty-runner-for-heroku</id>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -109,7 +158,7 @@
                                 <artifactItem>
                                     <groupId>org.eclipse.jetty</groupId>
                                     <artifactId>jetty-runner</artifactId>
-                                    <version>9.3.8.v20160314</version>
+                                    <version>${jetty.version}</version>
                                     <destFileName>jetty-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>

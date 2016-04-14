@@ -1,6 +1,5 @@
 package pl.dagguh.tournaments.tournament
 
-import org.apache.logging.log4j.LogManager
 import java.util.*
 
 class TournamentDao {
@@ -24,9 +23,5 @@ class TournamentDao {
 
     fun findById(id: Long): Optional<TournamentViewDto> {
         return Optional.ofNullable(views[id])
-    }
-
-    companion object {
-        private val LOG = LogManager.getLogger(TournamentDao::class)
     }
 }

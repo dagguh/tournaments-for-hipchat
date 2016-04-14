@@ -1,14 +1,16 @@
 package pl.dagguh.tournaments.tournament
 
 import org.glassfish.jersey.client.ClientConfig
-import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertThat
 import org.junit.Test
+import javax.json.Json.createObjectBuilder
+import javax.json.JsonObject
+import javax.json.JsonObjectBuilder
 import javax.ws.rs.client.ClientBuilder
-import javax.ws.rs.client.Entity.entity
+import javax.ws.rs.client.Entity.json
 import javax.ws.rs.client.WebTarget
-import javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE
 
 class TournamentResourceIT {
 
@@ -22,38 +24,50 @@ class TournamentResourceIT {
 
     @Test
     fun shouldStartWithGivenTitle() {
-        val view = start(TournamentStartDto("alpha"))
+        val start = buildStart()
+                .add("title", "alpha")
+                .build()
 
-        assertThat(view.title, equalTo("alpha"))
+        val view = tournament
+                .path("start")
+                .request()
+                .post(json(start))
+                .readEntity(JsonObject::class.java)
+
+        assertThat(view.getString("title"), equalTo("alpha"))
     }
 
-    private fun start(start: TournamentStartDto): TournamentViewDto {
+    private fun buildStart(): JsonObjectBuilder {
+        return createObjectBuilder()
+                .add("title", "dummyTitle")
+    }
+
+    private fun start(start: JsonObject): JsonObject {
         return tournament
                 .path("start")
                 .request()
-                .post(entity(start, APPLICATION_JSON_TYPE))
-                .readEntity(TournamentViewDto::class.java)
+                .post(json(start))
+                .readEntity(JsonObject::class.java)
     }
 
     @Test
-    fun shouldStartWithDifferentIdsDespiteSameTitles() {
-        val firstView = start(TournamentStartDto("beta"))
-        val secondView = start(TournamentStartDto("beta"))
+    fun shouldStartWithDifferentIdsDespiteSameRequest() {
+        val firstView = start(buildStart().build())
+        val secondView = start(buildStart().build())
 
-        assertThat(firstView.id, CoreMatchers.not(equalTo(secondView.id)))
+        assertThat(firstView.getInt("id"), not(equalTo(secondView.getInt("id"))))
     }
 
     @Test
     fun shouldShowStartedTournament() {
-        val startedView = start(TournamentStartDto("gamma"))
+        val startedView = start(buildStart().build())
         val shownView = tournament
                 .path("show")
-                .queryParam("id", startedView.id)
+                .queryParam("id", startedView.getInt("id"))
                 .request()
                 .get()
-                .readEntity(TournamentViewDto::class.java)
+                .readEntity(JsonObject::class.java)
 
         assertThat(startedView, equalTo(shownView))
     }
-
 }

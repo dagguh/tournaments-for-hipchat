@@ -5,7 +5,7 @@
 `/tournament start swiss:2:PT65M:4 "Netrunner Draft #5" @Alice @Bob Carol @Dave @Eve Frank Grace`
 > Tournament `T1` started.
 
-`/tournament info`
+`/tournament show`
 > Tournament `T1` “Netrunner Draft #5” has started on 2016-05-16 17:35.
 
 > It uses Swiss pairings. Number of rounds: 2. Time for each round: 65 minutes. Byes are worth 4 points.
@@ -99,3 +99,18 @@ _65 minutes pass ..._
 * Grace: 4
 * Bob Beta: 3
 * Carol: 2
+
+# Development
+
+## Gotchas
+
+### Kotlin data classes vs Moxy
+#### Cause
+
+* Moxy deserialization needs a mutable type with a no-arg constructor.
+* Kotlin data classes [require at least one constructor parameter](http://blog.jetbrains.com/kotlin/2015/09/feedback-request-limitations-on-data-classes/).
+* Kotlin generates all permutations of legal constructors.
+
+#### Result
+All DTO parameters must be mutable (`var`) and initialized (e.g. `= ""`).
+It will cause Kotlin to generate a no-arg constructor among other permutations.

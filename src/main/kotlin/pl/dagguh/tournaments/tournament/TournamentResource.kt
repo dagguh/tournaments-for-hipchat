@@ -7,20 +7,20 @@ import javax.ws.rs.core.Response.Status.NOT_FOUND
 
 @Path("tournament")
 @Produces(MediaType.APPLICATION_JSON)
-class TournamentResource(private val dao: TournamentDao) {
+class TournamentResource(private val service: TournamentService) {
 
     @Path("start")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     fun start(start: TournamentStartDto): Response {
-        val view = dao.start(start)
+        val view = service.start(start)
         return Response.ok(view).build();
     }
 
     @Path("show")
     @GET
     fun show(@QueryParam("id") id: Long): Response {
-        val view = dao.show(id)
+        val view = service.show(id)
         if (view.isPresent) {
             return Response.ok(view.get()).build();
         } else {

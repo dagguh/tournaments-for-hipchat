@@ -5,14 +5,15 @@ import pl.dagguh.tournaments.hipchat.HipchatCommandDispatcher
 import pl.dagguh.tournaments.hipchat.TournamentHipchatResource
 import pl.dagguh.tournaments.tournament.TournamentDao
 import pl.dagguh.tournaments.tournament.TournamentResource
+import pl.dagguh.tournaments.tournament.TournamentService
 
 class ManualResourceConfig : ResourceConfig() {
 
     init {
         register(ServerErrorLogger())
         register(HealthResource())
-        val tournament = TournamentResource(TournamentDao())
-        register(tournament)
+        val tournament = TournamentService(TournamentDao())
+        register(TournamentResource(tournament))
         register(TournamentHipchatResource(HipchatCommandDispatcher(tournament)))
     }
 }

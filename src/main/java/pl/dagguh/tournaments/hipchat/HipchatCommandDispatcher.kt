@@ -7,12 +7,21 @@ import javax.ws.rs.core.Response.Status.NOT_FOUND
 
 class HipchatCommandDispatcher(private val tournament: TournamentService) {
 
-    internal fun dispatch(command: HipchatCommand): Response {
-        if (command.item.message.message.contains("start")) {
-            val view = tournament.start(TournamentStartDto("Tournament via HipChat"))
-            return Response.ok(view).build();
+    internal fun dispatch(command: HipchatCommandDto): Response {
+        if (command.item.message.message.startsWith("/tournament start")) {
+            return start()
         } else {
             return Response.status(NOT_FOUND).build();
         }
+    }
+
+    private fun start(): Response {
+        val view = tournament.start(TournamentStartDto("Tournament via HipChat"))
+        return Response.ok(HipchatResponseDto(
+                "green",
+                "Tournament T%s started.".format(view.id),
+                false,
+                "text"
+        )).build();
     }
 }

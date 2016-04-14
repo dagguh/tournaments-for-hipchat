@@ -14,7 +14,7 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    fun commandViaHipChat(command: HipchatCommand): Response {
+    fun commandViaHipChat(command: HipchatCommandDto): Response {
         LOG.info("Dispatching {}", command)
         return dispatcher.dispatch(command)
     }

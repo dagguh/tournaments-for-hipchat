@@ -9,6 +9,6 @@ class IntegrationEnvironment() {
     fun getRoot(): WebTarget {
         val clientConfig = ClientConfig()
         val client = ClientBuilder.newClient(clientConfig)
-        return client.target("http://localhost:8080/")
+        return client.target("http://localhost:8080/rest")
     }
 }

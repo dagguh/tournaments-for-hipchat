@@ -1,0 +1,31 @@
+{
+  "name": "Tournamentor",
+  "description": "An integration that does wonderful things",
+  "key": "com.tournament",
+  "links": {
+    "homepage": "https://github.com/dagguh/tournaments-for-hipchat",
+    "self": "http://localhost:8080/atlassian-conn"
+  },
+  "capabilities": {
+    "hipchatApiConsumer": {
+      "scopes": [
+        "send_notification"
+      ]
+    },
+    "installable": {
+      "allowGlobal": false,
+      "allowRoom": true,
+      "installedUrl": "https://localhost:8080/rest/hipchat/installed",
+      "updatedUrl": "https://localhost:8080/rest/hipchat/updated"
+    },
+    "webhook": [
+      {
+        "url": "https://localhost:8080/rest/hipchat/webhook",
+        "pattern": "^/(tournament|game|round).*",
+        "event": "room_message",
+        "authentication": "jwt",
+        "name": "Tournament"
+      }
+    ]
+  }
+}

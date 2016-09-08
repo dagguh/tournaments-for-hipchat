@@ -16,9 +16,24 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>DefaultServletOverride</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>dirAllowed</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
 
     <servlet-mapping>
         <servlet-name>Jersey REST Service</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DefaultServletOverride</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>

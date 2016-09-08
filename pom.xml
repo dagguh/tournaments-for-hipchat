@@ -147,6 +147,7 @@
                 <configuration>
                     <stopKey>stop-key</stopKey>
                     <stopPort>18080</stopPort>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <!-- disable classpath scanning -->
                     <webApp>
                         <webInfIncludeJarPattern>^$</webInfIncludeJarPattern>

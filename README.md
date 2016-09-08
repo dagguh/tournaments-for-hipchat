@@ -182,7 +182,7 @@ _65 minutes pass ..._
 ## Lack of transparency
 Unfortunately, currently the local dev loop is not transparent.
 You need to run the magical `mvn jetty:run` and then you'll be able to run tests from IntelliJ.
-Automatic reloading also does not seem to work.
+Automatic periodic reloading isn't perfect.
 
 ## Gotchas
 

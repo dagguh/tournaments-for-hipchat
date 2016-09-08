@@ -12,8 +12,9 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 @Path("hipchat")
-class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher) {
-    private val installations: InstallationDao = InstallationDao()
+class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher,
+                                private val installations: InstallationDao,
+                                private val urls: HipchatServerUrlsDao) {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -27,7 +28,9 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
     @Path("installed")
     @Consumes(MediaType.APPLICATION_JSON)
     fun addonInstalled(installationData: HipchatInstallationDto): Response {
-        installations.store(installationData.oauthId, installationData)
+        val oauthId = installationData.oauthId;
+
+        installations.store(oauthId, installationData)
 
         val clientConfig = ClientConfig()
         val capabilities = ClientBuilder.newClient(clientConfig)
@@ -46,9 +49,7 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
                 .getJsonObject("hipchatApiProvider")
                 .getString("url")
 
-        println(installationData)
-        println(tokenUrl)
-        println(apiUrl)
+        urls.store(oauthId, HipchatServerUrlsDto(tokenUrl, apiUrl))
 
         return Response.ok().build()
     }

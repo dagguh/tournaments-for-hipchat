@@ -5,6 +5,7 @@ import java.util.*
 class InstallationDao {
 
     private val installations: MutableMap<String, HipchatInstallationDto> = HashMap()
+
     fun store(oauthId: String, installationData: HipchatInstallationDto) {
         installations.put(oauthId, installationData)
     }

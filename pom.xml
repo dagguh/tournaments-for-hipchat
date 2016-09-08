@@ -16,7 +16,7 @@
     <properties>
         <jersey.version>2.22.2</jersey.version>
         <jetty.version>9.3.8.v20160314</jetty.version>
-        <kotlin.version>1.0.1-2</kotlin.version>
+        <kotlin.version>1.0.3</kotlin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -96,8 +96,14 @@
                 <version>${kotlin.version}</version>
                 <executions>
                     <execution>
+                        <id>compile-kotlin-source</id>
                         <goals>
                             <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>compile-kotlin-tests</id>
+                        <goals>
                             <goal>test-compile</goal>
                         </goals>
                     </execution>

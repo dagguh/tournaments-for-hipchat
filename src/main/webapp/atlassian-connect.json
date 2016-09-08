@@ -4,7 +4,7 @@
   "key": "com.tournament",
   "links": {
     "homepage": "https://github.com/dagguh/tournaments-for-hipchat",
-    "self": "http://localhost:8080/atlassian-conn"
+    "self": "https://sheltered-oasis-29329.herokuapp.com/atlassian-connect.json"
   },
   "capabilities": {
     "hipchatApiConsumer": {
@@ -15,12 +15,12 @@
     "installable": {
       "allowGlobal": false,
       "allowRoom": true,
-      "installedUrl": "https://localhost:8080/rest/hipchat/installed",
-      "updatedUrl": "https://localhost:8080/rest/hipchat/updated"
+      "installedUrl": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/installed",
+      "updatedUrl": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/updated"
     },
     "webhook": [
       {
-        "url": "https://localhost:8080/rest/hipchat/webhook",
+        "url": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/webhook",
         "pattern": "^/(tournament|game|round).*",
         "event": "room_message",
         "authentication": "jwt",

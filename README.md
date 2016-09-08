@@ -95,7 +95,7 @@
 
 > Bye given to Grace. An odd number of players results in a bye for a random lowest-ranked player.
 
-`/match add-vs Carol Eve 0:2`
+`/match score Carol Eve 0:2`
 > Match `T1R1G2` recorded.
 
 `/round start`
@@ -103,7 +103,7 @@
 * `T1R1G1: Alice vs Dave`
 * `T1R1G3: Frank vs Bob`
 
-`/match add-vs Alice Bob 2:2`
+`/match score Alice Bob 2:2`
 > These opponents should not play against each other this round. Command ignored.
 
 `/match update Carol Eve 2:2`
@@ -115,7 +115,7 @@
 `/match show G2`
 > Match `T1R1G2: Carol vs Eve 2:2` was played.
 
-`/match add-id G1 4:0`
+`/match score Alice Dave 4:0`
 > Match `T1R1G1: Alice vs Dave 4:0` recorded.
 
 _65 minutes pass ..._
@@ -123,7 +123,7 @@ _65 minutes pass ..._
 > Round `T1R1` timed out. The following matches should be timed out:
 * `T1R1G3: Frank vs Bob`
 
-`/match add-vs Bob Frank 1:2`
+`/match score Bob Frank 1:2`
 > Match `T1R1G3: Frank vs Bob 2:1` recorded.
 
 > Round `T1R1` finished.
@@ -148,13 +148,13 @@ _65 minutes pass ..._
 
 > Bye given to Dave. An odd number of players results in a bye for a random lowest-ranked player.
 
-`/match add-vs Bob Eve 2:2`
+`/match score Bob Eve 2:2`
 > Match `T1R2G3` recorded.
 
-`/match add-vs Alice Grace 4:0`
+`/match score Alice Grace 4:0`
 > Match `T1R2G1` recorded.
 
-`/match add-vs Carol Frank 0:4`
+`/match score Carol Frank 0:4`
 > Match `T1R2G2` recorded.
 
 > Round `T1R2` finished.

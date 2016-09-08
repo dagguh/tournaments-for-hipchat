@@ -19,7 +19,18 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
         return dispatcher.dispatch(command)
     }
 
+    @POST
+    @Path("installed")
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun addonInstalled(installationData: HipchatInstallationDto): Response {
+        println(installationData);
+        //store the installation data
+        //get capabilities and store urls
+        return Response.ok().build();
+    }
+
     companion object {
         private val LOG = LogManager.getLogger(TournamentHipchatResource::class)
     }
 }
+

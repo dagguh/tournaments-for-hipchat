@@ -12,9 +12,7 @@ class TournamentDao {
 
     fun create(start: TournamentStartDto): TournamentViewDto {
         synchronized(views, {
-            val view = TournamentViewDto()
-            view.id = nextId
-            view.title = start.title
+            val view = TournamentViewDto(id = nextId, title = start.title)
             views.put(nextId, view)
             nextId++
             return view

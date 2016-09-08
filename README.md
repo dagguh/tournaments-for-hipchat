@@ -13,12 +13,12 @@
 > Available `/tournament` sub-commands:
 * create
 * set
-    * title
     * players
-* use
-    * swiss
+    * title
 * show
 * start
+* use
+    * swiss
 
 `/tournament create`
 > Tournament `T1` created.
@@ -54,15 +54,15 @@
 > Available `/tournament` sub-commands:
 * create
 * set
-    * title
+    * bye-points
     * players
     * rounds
     * round-time
-    * bye-points
-* use
-    * swiss
+    * title
 * show
 * start
+* use
+    * swiss
 
 `/tournament set rounds 2`
 > Tournament `T1` number of rounds set.

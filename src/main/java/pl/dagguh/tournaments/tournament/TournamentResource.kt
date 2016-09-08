@@ -9,12 +9,31 @@ import javax.ws.rs.core.Response.Status.NOT_FOUND
 @Produces(MediaType.APPLICATION_JSON)
 class TournamentResource(private val service: TournamentService) {
 
+    @Path("commands")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    fun listCommands(): Response {
+        val commands = listOf(
+                CommandViewDto("create", listOf()),
+                CommandViewDto("set", listOf(
+                        CommandViewDto("players", listOf()),
+                        CommandViewDto("title", listOf())
+                )),
+                CommandViewDto("show", listOf()),
+                CommandViewDto("start", listOf()),
+                CommandViewDto("use", listOf(
+                        CommandViewDto("swiss", listOf())
+                ))
+        )
+        return Response.ok(commands).build()
+    }
+
     @Path("start")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     fun start(start: TournamentStartDto): Response {
         val view = service.start(start)
-        return Response.ok(view).build();
+        return Response.ok(view).build()
     }
 
     @Path("show")
@@ -22,9 +41,9 @@ class TournamentResource(private val service: TournamentService) {
     fun show(@QueryParam("id") id: Long): Response {
         val view = service.show(id)
         if (view.isPresent) {
-            return Response.ok(view.get()).build();
+            return Response.ok(view.get()).build()
         } else {
-            return Response.status(NOT_FOUND).build();
+            return Response.status(NOT_FOUND).build()
         }
     }
 }

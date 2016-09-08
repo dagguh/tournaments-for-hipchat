@@ -1,25 +1,22 @@
 package pl.dagguh.tournaments.tournament
 
 import java.util.*
+import javax.persistence.EntityManager
 
-class TournamentDao {
-
-    private val views: MutableMap<Long, TournamentViewDto> = HashMap()
-    /**
-     * Needs to be guarded for thread safety
-     */
-    private var nextId: Long = 1L
+class TournamentDao(private val entityManager: EntityManager) {
 
     fun create(start: TournamentStartDto): TournamentViewDto {
-        synchronized(views, {
-            val view = TournamentViewDto(id = nextId, title = start.title)
-            views.put(nextId, view)
-            nextId++
-            return view
-        })
+        val tournament = TournamentEntity(title = start.title)
+        entityManager.persist(tournament)
+        return TournamentViewDto(tournament.id!!, tournament.title)
     }
 
     fun findById(id: Long): Optional<TournamentViewDto> {
-        return Optional.ofNullable(views[id])
+        val tournament = entityManager.find(TournamentEntity::class.java, id)
+        if (tournament == null) {
+            return Optional.empty()
+        } else {
+            return Optional.of(TournamentViewDto(tournament.id!!, tournament.title))
+        }
     }
 }

@@ -24,6 +24,7 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
     }
 
     private fun fetchToken(oauthId: String): AccessToken {
+        println("fetching token");
         val installation: HipchatInstallationDto = installationDao.get(oauthId).get();
         val httpAuth: HttpAuthenticationFeature = HttpAuthenticationFeature.basic(installation.oauthId, installation.oauthSecret);
 

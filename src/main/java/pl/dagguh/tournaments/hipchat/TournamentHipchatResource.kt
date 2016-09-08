@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response
 
 @Path("hipchat")
 class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher) {
-    private val installations:InstallationDao = InstallationDao();
+    private val installations: InstallationDao = InstallationDao()
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -27,28 +27,30 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
     @Path("installed")
     @Consumes(MediaType.APPLICATION_JSON)
     fun addonInstalled(installationData: HipchatInstallationDto): Response {
-        installations.store(installationData.oauthId, installationData);
+        installations.store(installationData.oauthId, installationData)
 
         val clientConfig = ClientConfig()
         val capabilities = ClientBuilder.newClient(clientConfig)
-            .target(installationData.capabilitiesUrl)
-            .request()
-            .get()
-            .readEntity(JsonObject::class.java)
+                .target(installationData.capabilitiesUrl)
+                .request()
+                .get()
+                .readEntity(JsonObject::class.java)
 
-        installationData.tokenUrl = capabilities
+        val tokenUrl = capabilities
                 .getJsonObject("capabilities")
                 .getJsonObject("oauth2Provider")
                 .getString("tokenUrl")
 
-        installationData.apiUrl = capabilities
+        val apiUrl = capabilities
                 .getJsonObject("capabilities")
                 .getJsonObject("hipchatApiProvider")
                 .getString("url")
 
-        println(installationData);
+        println(installationData)
+        println(tokenUrl)
+        println(apiUrl)
 
-        return Response.ok().build();
+        return Response.ok().build()
     }
 
     companion object {

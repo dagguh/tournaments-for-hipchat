@@ -1,11 +1,16 @@
 package pl.dagguh.tournaments.hipchat
 
-data class HipchatCommandDto(var item: Item = HipchatCommandDto.Item()) {
+import com.fasterxml.jackson.annotation.JsonProperty
 
-    data class Item(var message: Message = Item.Message(), var room: Room = Item.Room()) {
+data class HipchatCommandDto(@JsonProperty("item") val item: Item) {
 
-        data class Message(var message: String = "")
+    data class Item(
+            @JsonProperty("message") val message: Message,
+            @JsonProperty("room") val room: Room
+    ) {
 
-        data class Room(var id: Long = 0)
+        data class Message(@JsonProperty("message") val message: String)
+
+        data class Room(@JsonProperty("id") val id: Long)
     }
 }

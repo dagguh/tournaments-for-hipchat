@@ -1,3 +1,5 @@
 package pl.dagguh.tournaments.tournament
 
-data class TournamentStartDto(var title: String = "")
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class TournamentStartDto(@JsonProperty("title") val title: String)

@@ -14,5 +14,5 @@ class HealthResource {
         return Health("HEALTHY")
     }
 
-    data class Health(var status: String = "")
+    data class Health(val status: String)
 }

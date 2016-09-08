@@ -14,15 +14,15 @@ class TournamentResource(private val service: TournamentService) {
     @Consumes(MediaType.APPLICATION_JSON)
     fun listCommands(): Response {
         val commands = listOf(
-                CommandViewDto("create", listOf()),
+                CommandViewDto("create"),
                 CommandViewDto("set", listOf(
-                        CommandViewDto("players", listOf()),
-                        CommandViewDto("title", listOf())
+                        CommandViewDto("players"),
+                        CommandViewDto("title")
                 )),
-                CommandViewDto("show", listOf()),
-                CommandViewDto("start", listOf()),
+                CommandViewDto("show"),
+                CommandViewDto("start"),
                 CommandViewDto("use", listOf(
-                        CommandViewDto("swiss", listOf())
+                        CommandViewDto("swiss")
                 ))
         )
         return Response.ok(commands).build()

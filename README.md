@@ -179,15 +179,13 @@ _65 minutes pass ..._
 
 # Development
 
+## Lack of transparency
+Unfortunately, currently the local dev loop is not transparent.
+You need to run the magical `mvn jetty:run` and then you'll be able to run tests from IntelliJ.
+Automatic reloading also does not seem to work.
+
 ## Gotchas
 
-### Kotlin data classes vs Moxy
-#### Cause
-
-* Moxy deserialization needs a mutable type with a no-arg constructor.
-* Kotlin data classes [require at least one constructor parameter](http://blog.jetbrains.com/kotlin/2015/09/feedback-request-limitations-on-data-classes/).
-* Kotlin generates all permutations of legal constructors.
-
-#### Result
-All DTO parameters must be mutable (`var`) and initialized (e.g. `= ""`).
-It will cause Kotlin to generate a no-arg constructor among other permutations.
+* Jackson deserialization needs one of:
+  * a type with `@JsonProperty` annotated constructor
+  * a mutable type with a no-arg constructor

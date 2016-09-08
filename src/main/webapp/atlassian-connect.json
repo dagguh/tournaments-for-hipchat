@@ -15,8 +15,8 @@
     "installable": {
       "allowGlobal": false,
       "allowRoom": true,
-      "installedUrl": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/installed",
-      "updatedUrl": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/updated"
+      "callbackUrl": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/installed",
+      "updateCallbackUrl": "https://sheltered-oasis-29329.herokuapp.com/rest/hipchat/updated"
     },
     "webhook": [
       {

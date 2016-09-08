@@ -5,6 +5,7 @@ import pl.dagguh.tournaments.hipchat.HipchatCommandDispatcher
 import pl.dagguh.tournaments.hipchat.HipchatServerUrlsDao
 import pl.dagguh.tournaments.hipchat.InstallationDao
 import pl.dagguh.tournaments.hipchat.TournamentHipchatResource
+import pl.dagguh.tournaments.hipchat.api.HipchatApiService
 import pl.dagguh.tournaments.tournament.TournamentDao
 import pl.dagguh.tournaments.tournament.TournamentResource
 import pl.dagguh.tournaments.tournament.TournamentService
@@ -21,8 +22,9 @@ class ManualResourceConfig : ResourceConfig() {
         val tournament = TournamentService(TournamentDao(entityManager))
         val installations = InstallationDao()
         val urls = HipchatServerUrlsDao()
+        var api = HipchatApiService(installations, urls);
         register(TournamentResource(tournament))
-        register(TournamentHipchatResource(HipchatCommandDispatcher(tournament), installations, urls))
+        register(TournamentHipchatResource(HipchatCommandDispatcher(tournament), api, installations, urls))
     }
 
     private fun createEntityManager(): EntityManager {

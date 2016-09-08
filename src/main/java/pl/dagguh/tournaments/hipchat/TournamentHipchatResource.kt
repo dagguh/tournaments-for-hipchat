@@ -2,6 +2,7 @@ package pl.dagguh.tournaments.hipchat
 
 import org.apache.logging.log4j.LogManager
 import org.glassfish.jersey.client.ClientConfig
+import pl.dagguh.tournaments.hipchat.api.HipchatApiService
 import javax.json.JsonObject
 import javax.ws.rs.Consumes
 import javax.ws.rs.POST
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response
 
 @Path("hipchat")
 class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher,
+                                private val api: HipchatApiService,
                                 private val installations: InstallationDao,
                                 private val urls: HipchatServerUrlsDao) {
 
@@ -51,6 +53,7 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
 
         urls.store(oauthId, HipchatServerUrlsDto(tokenUrl, apiUrl))
 
+        api.postToRoom(oauthId, "Hello");
         return Response.ok().build()
     }
 

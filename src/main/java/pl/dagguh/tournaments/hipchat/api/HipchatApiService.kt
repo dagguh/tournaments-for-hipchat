@@ -37,7 +37,7 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
             .path(installationDao.get(oauthId).get().roomId.toString())
             .path("notification")
             .request()
-            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token?.token)
             .post(Entity.json(payload))
 
     }

@@ -27,8 +27,8 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
     @Path("installed")
     @Consumes(MediaType.APPLICATION_JSON)
     fun addonInstalled(installationData: HipchatInstallationDto): Response {
-        println(installationData);
         installations.store(installationData.oauthId, installationData);
+
         val clientConfig = ClientConfig()
         val capabilities = ClientBuilder.newClient(clientConfig)
             .target(installationData.capabilitiesUrl)
@@ -36,8 +36,18 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
             .get()
             .readEntity(JsonObject::class.java)
 
-        println(capabilities);
-        
+        installationData.tokenUrl = capabilities
+                .getJsonObject("capabilities")
+                .getJsonObject("oauth2Provider")
+                .getString("tokenUrl")
+
+        installationData.apiUrl = capabilities
+                .getJsonObject("capabilities")
+                .getJsonObject("hipchatApiProvider")
+                .getString("url")
+
+        println(installationData);
+
         return Response.ok().build();
     }
 

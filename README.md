@@ -85,8 +85,8 @@
 
 > It is the current tournament.
 
-`/round start`
-> Round `T1R1` started. It will end on 18:40.
+`/round add`
+> Round `T1R1` added.
 
 > Matches to play:
 * `T1R1G1: Alice vs Dave`
@@ -95,13 +95,19 @@
 
 > Bye given to Grace. An odd number of players results in a bye for a random lowest-ranked player.
 
+`/round start`
+> Round `T1R1` started. It will end on 18:40.
+
 `/match score Carol Eve 0:2`
 > Match `T1R1G2` recorded.
 
-`/round start`
-> Round `T1R2` cannot start until `T1R1` finishes:
+`/round add`
+> Round `T1R2` cannot be added until `T1R1` finishes:
 * `T1R1G1: Alice vs Dave`
 * `T1R1G3: Frank vs Bob`
+
+`/round start`
+> Round `T1R1` is already started.
 
 `/match score Alice Bob 2:2`
 > These opponents should not play against each other this round. Command ignored.

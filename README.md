@@ -179,6 +179,9 @@ _65 minutes pass ..._
 
 # Development
 
+## Assumptions
+The environment either has Docker or a useful `JDBC_DATABASE_URL` variable
+
 ## Lack of transparency
 Unfortunately, currently the local dev loop is not transparent.
 You need to run the magical `mvn jetty:run` and then you'll be able to run tests from IntelliJ.

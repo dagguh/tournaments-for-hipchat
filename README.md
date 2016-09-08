@@ -4,7 +4,7 @@
 
 `/tournaments`
 > Available commands:
-* game
+* match
 * round
 * score
 * tournament
@@ -88,43 +88,43 @@
 `/round start`
 > Round `T1R1` started. It will end on 18:40.
 
-> Games to play:
+> Matches to play:
 * `T1R1G1: Alice vs Dave`
 * `T1R1G2: Carol vs Eve`
 * `T1R1G3: Frank vs Bob`
 
 > Bye given to Grace. An odd number of players results in a bye for a random lowest-ranked player.
 
-`/game add-vs Carol Eve 0:2`
-> Game `T1R1G2` recorded.
+`/match add-vs Carol Eve 0:2`
+> Match `T1R1G2` recorded.
 
 `/round start`
 > Round `T1R2` cannot start until `T1R1` finishes:
 * `T1R1G1: Alice vs Dave`
 * `T1R1G3: Frank vs Bob`
 
-`/game add-vs Alice Bob 2:2`
+`/match add-vs Alice Bob 2:2`
 > These opponents should not play against each other this round. Command ignored.
 
-`/game update Carol Eve 2:2`
-> Game `T1R1G2` updated.
+`/match update Carol Eve 2:2`
+> Match `T1R1G2` updated.
 
-`/game show G1`
-> Game `T1R1G1: Alice vs Dave` was not played yet.
+`/match show G1`
+> Match `T1R1G1: Alice vs Dave` was not played yet.
 
-`/game show G2`
-> Game `T1R1G2: Carol vs Eve 2:2` was played.
+`/match show G2`
+> Match `T1R1G2: Carol vs Eve 2:2` was played.
 
-`/game add-id G1 4:0`
-> Game `T1R1G1: Alice vs Dave 4:0` recorded.
+`/match add-id G1 4:0`
+> Match `T1R1G1: Alice vs Dave 4:0` recorded.
 
 _65 minutes pass ..._
 
-> Round `T1R1` timed out. The following games should be timed out:
+> Round `T1R1` timed out. The following matches should be timed out:
 * `T1R1G3: Frank vs Bob`
 
-`/game add-vs Bob Frank 1:2`
-> Game `T1R1G3: Frank vs Bob 2:1` recorded.
+`/match add-vs Bob Frank 1:2`
+> Match `T1R1G3: Frank vs Bob 2:1` recorded.
 
 > Round `T1R1` finished.
 
@@ -141,21 +141,21 @@ _65 minutes pass ..._
 `/round start`
 > Round `T1R2` started. It will end on 19:50.
 
-> Games to play:
+> Matches to play:
 * `T1R2G1: Alice vs Grace`
 * `T1R2G2: Carol vs Frank`
 * `T1R2G3: Bob vs Eve`
 
 > Bye given to Dave. An odd number of players results in a bye for a random lowest-ranked player.
 
-`/game add-vs Bob Eve 2:2`
-> Game `T1R2G3` recorded.
+`/match add-vs Bob Eve 2:2`
+> Match `T1R2G3` recorded.
 
-`/game add-vs Alice Grace 4:0`
-> Game `T1R2G1` recorded.
+`/match add-vs Alice Grace 4:0`
+> Match `T1R2G1` recorded.
 
-`/game add-vs Carol Frank 0:4`
-> Game `T1R2G2` recorded.
+`/match add-vs Carol Frank 0:4`
+> Match `T1R2G2` recorded.
 
 > Round `T1R2` finished.
 

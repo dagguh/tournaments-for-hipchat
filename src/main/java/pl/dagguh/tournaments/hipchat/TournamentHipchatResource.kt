@@ -52,9 +52,8 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
                 .getString("url")
 
         urls.store(oauthId, HipchatServerUrlsDto(tokenUrl, apiUrl))
-        LOG.info("posting to room");
 
-        api.postToRoom(oauthId, "Hello");
+        api.postToRoom(oauthId, "Hello babe");
         return Response.ok().build()
     }
 

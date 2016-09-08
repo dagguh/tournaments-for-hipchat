@@ -11,6 +11,7 @@ import javax.json.JsonObject
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.Form
+import javax.ws.rs.core.HttpHeaders
 
 class HipchatApiService(val installationDao: InstallationDao, val hipchatServerUrlsDao: HipchatServerUrlsDao) {
     private val tokens: MutableMap<String, AccessToken> = HashMap();
@@ -21,10 +22,27 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
             tokens.put(oauthId, fetchToken(oauthId));
         }
 
+        var token: AccessToken? = tokens.get(oauthId);
+
+        var payload = javax.json.Json.createObjectBuilder()
+            .add("color", "grey")
+            .add("format", "text")
+            .add("notify", false)
+            .add("message", message)
+            .build()
+
+        ClientBuilder.newClient(ClientConfig())
+            .target(hipchatServerUrlsDao.get(oauthId).get().apiUrl)
+            .path("room")
+            .path(installationDao.get(oauthId).get().roomId.toString())
+            .path("notification")
+            .request()
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+            .post(Entity.json(payload))
+
     }
 
     private fun fetchToken(oauthId: String): AccessToken {
-        println("fetching token");
         val installation: HipchatInstallationDto = installationDao.get(oauthId).get();
         val httpAuth: HttpAuthenticationFeature = HttpAuthenticationFeature.basic(installation.oauthId, installation.oauthSecret);
 

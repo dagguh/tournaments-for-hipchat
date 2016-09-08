@@ -106,7 +106,7 @@
 `/match score Alice Bob 2:2`
 > These opponents should not play against each other this round. Command ignored.
 
-`/match update Carol Eve 2:2`
+`/match score Carol Eve 2:2`
 > Match `T1R1G2` updated.
 
 `/match show G1`

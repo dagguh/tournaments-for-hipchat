@@ -25,7 +25,7 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
         var token: AccessToken? = tokens.get(oauthId);
 
         var payload = javax.json.Json.createObjectBuilder()
-            .add("color", "grey")
+            .add("color", "red")
             .add("format", "text")
             .add("notify", false)
             .add("message", message)

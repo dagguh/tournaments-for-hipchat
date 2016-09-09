@@ -184,8 +184,9 @@ The environment either has Docker or a useful `JDBC_DATABASE_URL` variable
 
 ## Lack of transparency
 Unfortunately, currently the local dev loop is not transparent.
-You need to run the magical `mvn jetty:run` and then you'll be able to run tests from IntelliJ.
-Automatic periodic reloading isn't perfect.
+You need to run with the magical `keep-jetty` Maven profile and then you'll be able to run tests from IntelliJ.
+You'll have to clean up the Docker container as well.
+Automatic periodic reloading has a delay.
 
 ## Gotchas
 

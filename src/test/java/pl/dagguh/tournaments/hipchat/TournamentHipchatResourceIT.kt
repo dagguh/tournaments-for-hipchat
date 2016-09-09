@@ -38,6 +38,7 @@ class TournamentHipchatResourceIT {
 
     private fun command(command: JsonObject): JsonObject {
         return hipchat
+                .path("webhook")
                 .request()
                 .post(Entity.json(command))
                 .readEntity(JsonObject::class.java)

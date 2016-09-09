@@ -1,28 +1,25 @@
 package pl.dagguh.tournaments.hipchat
 
-import pl.dagguh.tournaments.tournament.TournamentService
-import pl.dagguh.tournaments.tournament.TournamentStartDto
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.Status.NOT_FOUND
+import pl.dagguh.tournaments.ServiceRouter
+import pl.dagguh.tournaments.channel.ChannelAuthorizationDto
+import pl.dagguh.tournaments.channel.ChannelViewDto
+import pl.dagguh.tournaments.tournament.TournamentCreationDto
 
-class HipchatCommandDispatcher(private val tournament: TournamentService) {
+class HipchatCommandDispatcher(private val router: ServiceRouter) {
 
-    internal fun dispatch(command: HipchatCommandDto): Response {
-        if (command.item.message.message.startsWith("/tournament start")) {
-            return start()
-        } else {
-            return Response.status(NOT_FOUND).build();
+    internal fun dispatch(command: HipchatCommandDto) {
+        if (command.item.message.message.startsWith("/tournament create")) {
+            create()
         }
     }
 
-    private fun start(): Response {
-        println("tournament start")
-        val view = tournament.start(TournamentStartDto("Tournament via HipChat"))
-        return Response.ok(HipchatMessageDto(
-                "green",
-                "Tournament T%s started.".format(view.id),
-                false,
-                "text"
-        )).build();
+    private fun create() {
+        val channel = ChannelViewDto(2345L, "hipchat")
+        router
+                .tournament(channel)
+                .create(TournamentCreationDto(
+                        title = "Tournament from HipChat",
+                        channel = ChannelAuthorizationDto(id = channel.id)
+                ))
     }
 }

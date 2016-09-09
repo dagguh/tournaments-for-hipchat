@@ -1,17 +1,15 @@
 package pl.dagguh.tournaments
 
 import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider
 import org.glassfish.jersey.server.ResourceConfig
-import pl.dagguh.tournaments.hipchat.HipchatCommandDispatcher
-import pl.dagguh.tournaments.hipchat.HipchatServerUrlsDao
-import pl.dagguh.tournaments.hipchat.InstallationDao
-import pl.dagguh.tournaments.hipchat.TournamentHipchatResource
+import pl.dagguh.tournaments.channel.ChannelDao
+import pl.dagguh.tournaments.channel.ChannelResource
+import pl.dagguh.tournaments.hipchat.*
 import pl.dagguh.tournaments.hipchat.api.HipchatApiService
+import pl.dagguh.tournaments.tournament.DaoTournamentService
 import pl.dagguh.tournaments.tournament.TournamentDao
 import pl.dagguh.tournaments.tournament.TournamentResource
-import pl.dagguh.tournaments.tournament.TournamentService
 import java.util.*
 import javax.persistence.EntityManager
 import javax.persistence.Persistence
@@ -20,15 +18,22 @@ class ManualResourceConfig : ResourceConfig() {
 
     init {
         configureJackson()
-        val entityManager = createEntityManager()
         register(ServerErrorLogger())
         register(HealthResource())
-        val tournament = TournamentService(TournamentDao(entityManager))
+        val entityManager = createEntityManager()
+        val tournament = DaoTournamentService(TournamentDao(entityManager))
         val installations = InstallationDao()
         val urls = HipchatServerUrlsDao()
         val api = HipchatApiService(installations, urls)
+        val router = ServiceRouter(
+                mapOf(
+                        "hipchat" to HipchatTournamentService(tournament, installations)
+                ),
+                tournament
+        )
+        register(ChannelResource(ChannelDao(entityManager)))
         register(TournamentResource(tournament))
-        register(TournamentHipchatResource(HipchatCommandDispatcher(tournament), api, installations, urls))
+        register(TournamentHipchatResource(HipchatCommandDispatcher(router), api, installations, urls))
     }
 
     private fun configureJackson() {

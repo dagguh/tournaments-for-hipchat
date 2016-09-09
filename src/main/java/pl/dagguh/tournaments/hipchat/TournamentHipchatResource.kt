@@ -13,23 +13,25 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 @Path("hipchat")
-class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher,
-                                private val api: HipchatApiService,
-                                private val installations: InstallationDao,
-                                private val urls: HipchatServerUrlsDao) {
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+class TournamentHipchatResource(
+        private val dispatcher: HipchatCommandDispatcher,
+        private val api: HipchatApiService,
+        private val installations: InstallationDao,
+        private val urls: HipchatServerUrlsDao
+) {
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("webhook")
     fun commandViaHipChat(command: HipchatCommandDto): Response {
         LOG.warn("Dispatching {}", command)
-        return dispatcher.dispatch(command)
+        dispatcher.dispatch(command)
+        return Response.ok().build()
     }
 
     @POST
     @Path("installed")
-    @Consumes(MediaType.APPLICATION_JSON)
     fun addonInstalled(installationData: HipchatInstallationDto): Response {
         val oauthId = installationData.oauthId;
 

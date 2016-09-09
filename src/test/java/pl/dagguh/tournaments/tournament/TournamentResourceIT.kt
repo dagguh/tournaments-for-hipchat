@@ -3,23 +3,37 @@ package pl.dagguh.tournaments.tournament
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertThat
+import org.junit.Before
 import org.junit.Test
 import pl.dagguh.tournaments.IntegrationEnvironment
+import pl.dagguh.tournaments.channel.ChannelViewDto
 import javax.json.JsonArray
 import javax.json.JsonObject
 import javax.json.JsonObjectBuilder
 import javax.ws.rs.client.Entity.json
+import javax.ws.rs.client.Entity.text
 import javax.ws.rs.client.WebTarget
 import javax.json.Json.createArrayBuilder as startArray
 import javax.json.Json.createObjectBuilder as startObject
 
 class TournamentResourceIT {
 
-    val tournament: WebTarget = IntegrationEnvironment().getRoot().path("tournament")
+    val tournaments: WebTarget = IntegrationEnvironment().getRoot().path("tournament")
+    val channels: WebTarget = IntegrationEnvironment().getRoot().path("channel")
+    var channelId: Long? = null
+
+    @Before
+    fun setUp() {
+        channelId = channels
+                .request()
+                .post(text(""), ChannelViewDto::class.java)
+                .id
+
+    }
 
     @Test
     fun shouldListInitialCommands() {
-        val actualCommands = tournament
+        val actualCommands = tournaments
                 .path("commands")
                 .request()
                 .get()
@@ -63,44 +77,42 @@ class TournamentResourceIT {
 
     @Test
     fun shouldStartWithGivenTitle() {
-        val start = startStartup()
+        val creation = startCreation()
                 .add("title", "alpha")
                 .build()
 
-        val view = tournament
-                .path("start")
-                .request()
-                .post(json(start))
-                .readEntity(JsonObject::class.java)
+        val view = create(creation)
 
         assertThat(view.getString("title"), equalTo("alpha"))
     }
 
-    private fun startStartup(): JsonObjectBuilder {
+    private fun startCreation(): JsonObjectBuilder {
         return startObject()
-                .add("title", "dummyTitle")
+                .add("title", "dummy title")
+                .add("channel", startObject().add("id", channelId!!).build())
     }
 
-    private fun startUp(start: JsonObject): JsonObject {
-        return tournament
-                .path("start")
+    private fun create(creation: JsonObject): JsonObject {
+        val response = tournaments
+                .path("create")
                 .request()
-                .post(json(start))
+                .post(json(creation))
+        return response
                 .readEntity(JsonObject::class.java)
     }
 
     @Test
-    fun shouldStartWithDifferentIdsDespiteSameRequest() {
-        val firstView = startUp(startStartup().build())
-        val secondView = startUp(startStartup().build())
+    fun shouldCreateWithDifferentIds() {
+        val firstView = create(startCreation().build())
+        val secondView = create(startCreation().build())
 
         assertThat(firstView.getInt("id"), not(equalTo(secondView.getInt("id"))))
     }
 
     @Test
     fun shouldShowStartedTournament() {
-        val startedView = startUp(startStartup().build())
-        val shownView = tournament
+        val startedView = create(startCreation().build())
+        val shownView = tournaments
                 .path("show")
                 .queryParam("id", startedView.getInt("id"))
                 .request()

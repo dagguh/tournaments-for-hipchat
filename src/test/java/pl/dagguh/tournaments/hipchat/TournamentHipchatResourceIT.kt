@@ -2,14 +2,14 @@ package pl.dagguh.tournaments.hipchat
 
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertThat
+import org.junit.Before
 import org.junit.Test
 import pl.dagguh.tournaments.IntegrationEnvironment
-import pl.dagguh.tournaments.PatternMatcher.Companion.matchesPattern
 import java.io.StringReader
+import java.util.*
 import javax.json.Json
 import javax.json.Json.createObjectBuilder
 import javax.json.JsonObject
-import javax.json.JsonObjectBuilder
 import javax.ws.rs.client.Entity
 import javax.ws.rs.client.WebTarget
 import javax.ws.rs.core.Response
@@ -17,31 +17,48 @@ import javax.ws.rs.core.Response.Status.OK
 
 class TournamentHipchatResourceIT {
 
+    val oauthId = "habahabakebab"
+    val oauthSecret = "47lassiand05ntcar3"
+    val roomId = 40
     val hipchat: WebTarget = IntegrationEnvironment().getRoot().path("hipchat")
 
-    @Test
-    fun shouldStartSwiss() {
-        val response = command(buildCommand(
-                "/tournament start swiss:2:PT65M:4 \"Netrunner Draft #5\" Alice Bob Carol Dave Eve Frank Grace"
-        ).build())
+    @Before
+    fun setUp() {
+        val installation = createObjectBuilder()
+                .add("oauthId", oauthId)
+                .add("oauthSecret", oauthSecret)
+                .add("roomId", roomId)
+                .add("capabilitiesUrl", "http://dummy.com")
+                .add("groupId", Random().nextInt())
+                .build()
 
-        val message = response.readEntity(JsonObject::class.java).getString("message")
-        assertThat(message, matchesPattern("Tournament T[\\d]* started\\.".toRegex()))
+        hipchat
+                .path("installed")
+                .request()
+                .post(Entity.json(installation))
+    }
+
+    @Test
+    fun shouldCreate() {
+        val response = command(buildCommand("/tournament create"))
+
+        assertThat(response.status, equalTo(OK.statusCode))
     }
 
 
-    private fun buildCommand(message: String): JsonObjectBuilder {
+    private fun buildCommand(message: String): JsonObject {
         return createObjectBuilder()
                 .add("item", createObjectBuilder()
                         .add("message", createObjectBuilder()
                                 .add("message", message)
                         )
                         .add("room", createObjectBuilder()
-                                .add("id", DUMMY_ROOM_ID)
+                                .add("id", roomId)
                         )
                 )
+                .add("oauth_client_id", oauthId)
+                .build()
     }
-
 
     private fun command(command: JsonObject): Response {
         return hipchat
@@ -96,9 +113,5 @@ class TournamentHipchatResourceIT {
         val response = command(command)
 
         assertThat(response.status, equalTo(OK.statusCode))
-    }
-
-    companion object {
-        private val DUMMY_ROOM_ID = 40L
     }
 }

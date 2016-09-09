@@ -6,12 +6,21 @@ import javax.ws.rs.core.Response
 import javax.ws.rs.core.Response.Status.NOT_FOUND
 
 @Path("tournament")
+@Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-class TournamentResource(private val service: TournamentService) {
+class TournamentResource(
+        private val service: TournamentService
+) {
+
+    @Path("create")
+    @POST
+    fun create(creation: TournamentCreationDto): Response {
+        val view = service.create(creation)
+        return Response.ok(view).build()
+    }
 
     @Path("commands")
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     fun listCommands(): Response {
         val commands = listOf(
                 CommandViewDto("create"),
@@ -30,7 +39,6 @@ class TournamentResource(private val service: TournamentService) {
 
     @Path("start")
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     fun start(start: TournamentStartDto): Response {
         val view = service.start(start)
         return Response.ok(view).build()

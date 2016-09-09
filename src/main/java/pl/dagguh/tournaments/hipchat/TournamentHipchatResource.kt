@@ -53,7 +53,7 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
 
         urls.store(oauthId, HipchatServerUrlsDto(tokenUrl, apiUrl))
 
-        api.postToRoom(oauthId, "Hello babe");
+        api.postToRoom(oauthId, "Tournament addon was installed in this room. Type /tournament to see available options")
         return Response.ok().build()
     }
 

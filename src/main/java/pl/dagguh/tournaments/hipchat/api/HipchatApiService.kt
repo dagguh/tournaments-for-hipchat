@@ -25,7 +25,7 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
         var token: AccessToken? = tokens.get(oauthId);
 
         var payload = javax.json.Json.createObjectBuilder()
-            .add("color", "red")
+            .add("color", "yellow")
             .add("format", "text")
             .add("notify", false)
             .add("message", message)
@@ -39,10 +39,6 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
             .request()
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + token?.token)
             .post(Entity.json(payload))
-
-        println(response.status);
-        println(response.readEntity(JsonObject::class.java));
-
     }
 
     private fun fetchToken(oauthId: String): AccessToken {

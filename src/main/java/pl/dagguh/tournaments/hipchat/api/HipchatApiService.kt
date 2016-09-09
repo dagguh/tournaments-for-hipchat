@@ -31,7 +31,7 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
             .add("message", message)
             .build()
 
-        ClientBuilder.newClient(ClientConfig())
+        val response = ClientBuilder.newClient(ClientConfig())
             .target(hipchatServerUrlsDao.get(oauthId).get().apiUrl)
             .path("room")
             .path(installationDao.get(oauthId).get().roomId.toString())
@@ -39,6 +39,9 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
             .request()
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + token?.token)
             .post(Entity.json(payload))
+
+        println(response.status);
+        println(response.readEntity(JsonObject::class.java));
 
     }
 

@@ -1,5 +1,8 @@
 package pl.dagguh.tournaments
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider
 import org.glassfish.jersey.server.ResourceConfig
 import pl.dagguh.tournaments.hipchat.HipchatCommandDispatcher
 import pl.dagguh.tournaments.hipchat.HipchatServerUrlsDao
@@ -16,15 +19,22 @@ import javax.persistence.Persistence
 class ManualResourceConfig : ResourceConfig() {
 
     init {
+        configureJackson()
         val entityManager = createEntityManager()
         register(ServerErrorLogger())
         register(HealthResource())
         val tournament = TournamentService(TournamentDao(entityManager))
         val installations = InstallationDao()
         val urls = HipchatServerUrlsDao()
-        var api = HipchatApiService(installations, urls);
+        val api = HipchatApiService(installations, urls)
         register(TournamentResource(tournament))
         register(TournamentHipchatResource(HipchatCommandDispatcher(tournament), api, installations, urls))
+    }
+
+    private fun configureJackson() {
+        val provider = JacksonJaxbJsonProvider()
+        provider.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        register(provider)
     }
 
     private fun createEntityManager(): EntityManager {

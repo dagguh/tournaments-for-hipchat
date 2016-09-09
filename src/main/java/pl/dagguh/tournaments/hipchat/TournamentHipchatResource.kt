@@ -23,7 +23,7 @@ class TournamentHipchatResource(private val dispatcher: HipchatCommandDispatcher
     @Produces(MediaType.APPLICATION_JSON)
     @Path("webhook")
     fun commandViaHipChat(command: HipchatCommandDto): Response {
-        LOG.info("Dispatching {}", command)
+        LOG.warn("Dispatching {}", command)
         return dispatcher.dispatch(command)
     }
 

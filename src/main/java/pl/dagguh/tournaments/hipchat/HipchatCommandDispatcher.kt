@@ -16,8 +16,9 @@ class HipchatCommandDispatcher(private val tournament: TournamentService) {
     }
 
     private fun start(): Response {
+        println("tournament start")
         val view = tournament.start(TournamentStartDto("Tournament via HipChat"))
-        return Response.ok(HipchatResponseDto(
+        return Response.ok(HipchatMessageDto(
                 "green",
                 "Tournament T%s started.".format(view.id),
                 false,

@@ -3,6 +3,7 @@ package pl.dagguh.tournaments.hipchat.api
 import org.glassfish.jersey.client.ClientConfig
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature
 import pl.dagguh.tournaments.hipchat.HipchatInstallationDto
+import pl.dagguh.tournaments.hipchat.HipchatMessageDto
 import pl.dagguh.tournaments.hipchat.HipchatServerUrlsDao
 import pl.dagguh.tournaments.hipchat.InstallationDao
 import java.time.LocalDateTime
@@ -24,21 +25,16 @@ class HipchatApiService(val installationDao: InstallationDao, val hipchatServerU
 
         var token: AccessToken? = tokens.get(oauthId);
 
-        var payload = javax.json.Json.createObjectBuilder()
-            .add("color", "yellow")
-            .add("format", "text")
-            .add("notify", false)
-            .add("message", message)
-            .build()
+        val msg = HipchatMessageDto("yellow", message, false, "text");
 
-        val response = ClientBuilder.newClient(ClientConfig())
+        ClientBuilder.newClient(ClientConfig())
             .target(hipchatServerUrlsDao.get(oauthId).get().apiUrl)
             .path("room")
             .path(installationDao.get(oauthId).get().roomId.toString())
             .path("notification")
             .request()
             .header(HttpHeaders.AUTHORIZATION, "Bearer " + token?.token)
-            .post(Entity.json(payload))
+            .post(Entity.json(msg))
     }
 
     private fun fetchToken(oauthId: String): AccessToken {

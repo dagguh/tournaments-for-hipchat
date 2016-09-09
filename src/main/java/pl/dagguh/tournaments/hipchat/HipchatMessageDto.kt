@@ -1,6 +1,6 @@
 package pl.dagguh.tournaments.hipchat
 
-data class HipchatResponseDto(
+data class HipchatMessageDto(
         val color: String,
         val message: String,
         val notify: Boolean,

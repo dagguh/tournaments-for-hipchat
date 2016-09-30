@@ -21,19 +21,21 @@ class ManualResourceConfig : ResourceConfig() {
         register(ServerErrorLogger())
         register(HealthResource())
         val entityManager = createEntityManager()
-        val tournament = DaoTournamentService(TournamentDao(entityManager))
         val installations = InstallationDao()
         val urls = HipchatServerUrlsDao()
         val api = HipchatApiService(installations, urls)
-        val router = ServiceRouter(
-                mapOf(
-                        "hipchat" to HipchatTournamentService(tournament, installations)
-                ),
-                tournament
+        val channelDao = ChannelDao(entityManager)
+        val basicTournamentService = DaoTournamentService(TournamentDao(entityManager))
+        val tournament = SwitchingTournamentService(
+                TournamentServicePicker(
+                        basicTournamentService,
+                        HipchatTournamentService(basicTournamentService, installations),
+                        channelDao
+                )
         )
-        register(ChannelResource(ChannelDao(entityManager)))
+        register(ChannelResource(channelDao))
         register(TournamentResource(tournament))
-        register(TournamentHipchatResource(HipchatCommandDispatcher(router), api, installations, urls))
+        register(TournamentHipchatResource(HipchatCommandDispatcher(tournament), api, installations, urls))
     }
 
     private fun configureJackson() {

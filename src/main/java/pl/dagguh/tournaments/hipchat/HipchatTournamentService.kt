@@ -1,10 +1,10 @@
 package pl.dagguh.tournaments.hipchat
 
 import org.apache.logging.log4j.LogManager
-import pl.dagguh.tournaments.tournament.TournamentCreationDto
-import pl.dagguh.tournaments.tournament.TournamentService
-import pl.dagguh.tournaments.tournament.TournamentStartDto
-import pl.dagguh.tournaments.tournament.TournamentViewDto
+import pl.dagguh.tournaments.spi.TournamentCreationDto
+import pl.dagguh.tournaments.spi.TournamentService
+import pl.dagguh.tournaments.spi.TournamentStartDto
+import pl.dagguh.tournaments.spi.TournamentViewDto
 import java.util.*
 
 class HipchatTournamentService(

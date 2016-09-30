@@ -1,6 +1,4 @@
-package pl.dagguh.tournaments.tournament
-
-import pl.dagguh.tournaments.channel.ChannelViewDto
+package pl.dagguh.tournaments.spi
 
 data class TournamentViewDto(
         val id: Long,

@@ -1,4 +1,4 @@
-package pl.dagguh.tournaments.tournament
+package pl.dagguh.tournaments.spi
 
 import java.util.*
 

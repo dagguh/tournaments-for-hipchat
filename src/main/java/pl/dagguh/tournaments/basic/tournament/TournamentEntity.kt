@@ -1,6 +1,7 @@
-package pl.dagguh.tournaments.tournament
+package pl.dagguh.tournaments.basic.tournament
 
-import pl.dagguh.tournaments.channel.ChannelEntity
+import pl.dagguh.tournaments.spi.TournamentViewDto
+import pl.dagguh.tournaments.basic.channel.ChannelEntity
 import java.io.Serializable
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

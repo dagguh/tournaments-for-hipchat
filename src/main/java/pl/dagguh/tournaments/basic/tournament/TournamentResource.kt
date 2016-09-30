@@ -1,5 +1,9 @@
-package pl.dagguh.tournaments.tournament
+package pl.dagguh.tournaments.basic.tournament
 
+import pl.dagguh.tournaments.spi.TournamentCreationDto
+import pl.dagguh.tournaments.spi.TournamentService
+import pl.dagguh.tournaments.spi.TournamentStartDto
+import pl.dagguh.tournaments.basic.CommandViewDto
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response

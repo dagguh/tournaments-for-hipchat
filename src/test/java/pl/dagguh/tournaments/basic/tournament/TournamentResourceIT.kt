@@ -1,4 +1,4 @@
-package pl.dagguh.tournaments.tournament
+package pl.dagguh.tournaments.basic.tournament
 
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.not
@@ -6,7 +6,7 @@ import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import pl.dagguh.tournaments.IntegrationEnvironment
-import pl.dagguh.tournaments.channel.ChannelViewDto
+import pl.dagguh.tournaments.spi.ChannelViewDto
 import javax.json.JsonArray
 import javax.json.JsonObject
 import javax.json.JsonObjectBuilder

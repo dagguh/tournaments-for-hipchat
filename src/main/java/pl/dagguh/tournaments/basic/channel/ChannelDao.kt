@@ -1,5 +1,6 @@
-package pl.dagguh.tournaments.channel
+package pl.dagguh.tournaments.basic.channel
 
+import pl.dagguh.tournaments.spi.ChannelViewDto
 import java.util.*
 import java.util.Optional.ofNullable
 import javax.persistence.EntityManager

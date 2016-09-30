@@ -1,4 +1,4 @@
-package pl.dagguh.tournaments.channel
+package pl.dagguh.tournaments.basic.channel
 
 import javax.ws.rs.POST
 import javax.ws.rs.Path

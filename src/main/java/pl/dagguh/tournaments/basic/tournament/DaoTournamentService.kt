@@ -1,6 +1,10 @@
-package pl.dagguh.tournaments.tournament
+package pl.dagguh.tournaments.basic.tournament
 
 import org.apache.logging.log4j.LogManager
+import pl.dagguh.tournaments.spi.TournamentCreationDto
+import pl.dagguh.tournaments.spi.TournamentService
+import pl.dagguh.tournaments.spi.TournamentStartDto
+import pl.dagguh.tournaments.spi.TournamentViewDto
 import java.util.*
 
 class DaoTournamentService(private val dao: TournamentDao) : TournamentService {

@@ -1,7 +1,6 @@
-package pl.dagguh.tournaments.tournament
+package pl.dagguh.tournaments.spi
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import pl.dagguh.tournaments.channel.ChannelAuthorizationDto
 
 data class TournamentCreationDto(
         @JsonProperty("title") val title: String,

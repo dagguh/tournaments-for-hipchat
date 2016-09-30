@@ -1,8 +1,8 @@
 package pl.dagguh.tournaments
 
-import pl.dagguh.tournaments.channel.ChannelAuthorizationDto
-import pl.dagguh.tournaments.channel.ChannelDao
-import pl.dagguh.tournaments.tournament.TournamentService
+import pl.dagguh.tournaments.spi.ChannelAuthorizationDto
+import pl.dagguh.tournaments.spi.TournamentService
+import pl.dagguh.tournaments.basic.channel.ChannelDao
 
 class TournamentServicePicker(
         private val basicTournamentService: TournamentService,

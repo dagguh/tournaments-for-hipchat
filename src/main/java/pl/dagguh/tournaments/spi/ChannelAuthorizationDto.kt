@@ -1,4 +1,4 @@
-package pl.dagguh.tournaments.channel
+package pl.dagguh.tournaments.spi
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

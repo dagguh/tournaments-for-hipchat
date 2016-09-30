@@ -1,9 +1,9 @@
 package pl.dagguh.tournaments.hipchat
 
-import pl.dagguh.tournaments.channel.ChannelAuthorizationDto
-import pl.dagguh.tournaments.channel.ChannelViewDto
-import pl.dagguh.tournaments.tournament.TournamentCreationDto
-import pl.dagguh.tournaments.tournament.TournamentService
+import pl.dagguh.tournaments.spi.ChannelAuthorizationDto
+import pl.dagguh.tournaments.spi.ChannelViewDto
+import pl.dagguh.tournaments.spi.TournamentCreationDto
+import pl.dagguh.tournaments.spi.TournamentService
 
 class HipchatCommandDispatcher(private val tournamentService: TournamentService) {
 
